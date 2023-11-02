@@ -1,0 +1,33 @@
+<!-- index.html -->
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>H5 Model Deployment</title>
+</head>
+<body>
+    <h1>Model Prediction</h1>
+    <input type="text" id="inputData" placeholder="Input Data">
+    <button onclick="predict()">Predict</button>
+    <div id="output"></div>
+
+    <script>
+        function predict() {
+            const inputData = document.getElementById('inputData').value;
+            const requestData = { input: [inputData] };
+
+            fetch('/predict', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(requestData)
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('output').textContent = `Model Predictions: ${data.predictions}`;
+            });
+        }
+    </script>
+</body>
+</html>
